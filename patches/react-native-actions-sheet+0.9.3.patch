@@ -1,0 +1,30 @@
+diff --git a/node_modules/react-native-actions-sheet/dist/src/hooks/useKeyboard.js b/node_modules/react-native-actions-sheet/dist/src/hooks/useKeyboard.js
+index ec2da4b..319153e 100644
+--- a/node_modules/react-native-actions-sheet/dist/src/hooks/useKeyboard.js
++++ b/node_modules/react-native-actions-sheet/dist/src/hooks/useKeyboard.js
+@@ -15,6 +15,12 @@ export function useKeyboard(enabled) {
+     var _a = useState(false), shown = _a[0], setShown = _a[1];
+     var _b = useState(initialValue), coordinates = _b[0], setCoordinates = _b[1];
+     var _c = useState(0), keyboardHeight = _c[0], setKeyboardHeight = _c[1];
++    const isMounted = useRef(true);
++    useEffect(() => {
++        return () => {
++            isMounted.current = false;
++        };
++    }, []);
+     var handleKeyboardDidShow = React.useCallback(function (e) {
+         if (pauseKeyboardHandler.current)
+             return;
+@@ -56,8 +62,10 @@ export function useKeyboard(enabled) {
+         keyboardHeight: !enabled || !shown ? 0 : keyboardHeight,
+         pauseKeyboardHandler: pauseKeyboardHandler,
+         reset: function () {
+-            setShown(false);
+-            setKeyboardHeight(0);
++            if (isMounted.current) {
++                setShown(false);
++                setKeyboardHeight(0);
++            }
+         },
+     };
+ }
