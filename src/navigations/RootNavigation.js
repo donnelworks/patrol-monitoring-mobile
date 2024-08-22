@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Home, Login} from '@screens';
+import {CheckPatrol, Home, Login, SplashScreen} from '@screens';
 import {colors, fonts} from '@styles';
 import { StyleSheet } from 'react-native';
 
@@ -9,6 +9,11 @@ const Stack = createStackNavigator();
 const RootNavigation = () => {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="splashscreen"
+        component={SplashScreen}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="login"
         component={Login}
@@ -19,15 +24,15 @@ const RootNavigation = () => {
         component={Home}
         options={{headerShown: false}}
       />
-      {/* <Stack.Screen
-        name="actionSheet"
-        component={ActionSheet}
+      <Stack.Screen
+        name="checkPatrol"
+        component={CheckPatrol}
         options={{
-          title: 'Action Sheet',
+          title: 'Cek Patroli',
           headerTitleAlign: 'center',
           headerTitleStyle: styles.headerTitleStyle
         }}
-      /> */}
+      />
     </Stack.Navigator>
   );
 };

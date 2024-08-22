@@ -4,6 +4,7 @@ import Card from './Card';
 import { Gap, Grid, Icon } from '@themes';
 import Text from './Text';
 import { colors } from '@styles';
+import { timeFormat } from '@helpers';
 
 const ActivityList = ({time, activity, region, status, onPress}) => {
   return (
@@ -15,7 +16,7 @@ const ActivityList = ({time, activity, region, status, onPress}) => {
               Jam
             </Text>
             <Text type="OpenSansExtraBold" size={20} color="primary">
-              {time}
+              {timeFormat(time)}
             </Text>
           </Grid.Col>
           <Grid.Col xs={7}>

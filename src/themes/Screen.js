@@ -5,7 +5,6 @@ import { colors } from '@styles'
 const Screen = ({
   style,
   backgroundColor,
-  scrollable = false,
   justifyContent,
   alignItems,
   children
@@ -13,18 +12,11 @@ const Screen = ({
   return (
     <SafeAreaView style={[{
         flexGrow: 1,
+        justifyContent,
+        alignItems,
         backgroundColor: backgroundColor ? colors?.[`${backgroundColor}`] : colors?.light,
       }, style]}>
-      <ScrollView
-        scrollEnabled={scrollable}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          flexGrow: 1,
-          justifyContent,
-          alignItems,
-      }}>
         {children}
-      </ScrollView>
     </SafeAreaView>
   )
 }

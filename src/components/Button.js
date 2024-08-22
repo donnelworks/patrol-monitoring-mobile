@@ -1,5 +1,5 @@
 import {
-  Pressable,
+  ActivityIndicator,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -8,10 +8,10 @@ import {
 import React from 'react';
 import {colors, fonts} from '@styles';
 
-const Button = ({title, onPress}) => {
+const Button = ({title, disabled, loadingBtn, onPress}) => {
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
-      <Text style={styles.buttonText}>{title}</Text>
+    <TouchableOpacity style={[styles.button, {backgroundColor: disabled ? colors.border : colors.secondary}]} onPress={onPress} disabled={disabled}>
+      {loadingBtn ? (<ActivityIndicator color="#FFFFFF" />) : (<Text style={styles.buttonText}>{title}</Text>)}
     </TouchableOpacity>
   );
 };
@@ -21,7 +21,6 @@ export default Button;
 const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
-    backgroundColor: colors.secondary,
     padding: 15,
     justifyContent: 'center',
     alignItems: 'center',
@@ -29,7 +28,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontFamily: fonts.type.OpenSansBold,
-    fontSize: fonts.size.value(13),
+    fontSize: fonts.size.value(14),
     color: '#FFFFFF',
   },
 });

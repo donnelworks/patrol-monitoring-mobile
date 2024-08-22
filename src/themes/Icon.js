@@ -3,9 +3,10 @@ import Svg, { G, Path } from "react-native-svg";
 
 // Icon Library URL = https://www.streamlinehq.com/icons/core-duo-free
 
-export const Location = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress}) => (
+export const Location = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
     <Svg 
         onPress={onPress}
+        style={style}
         fill="none"
         viewBox="0 0 14 14"
         height={size}
@@ -45,9 +46,10 @@ export const Location = ({strokeColor = '#aaa', fillColor = 'none', size = 14, o
     </Svg>
 );
 
-export const Square = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress}) => (
+export const Square = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
     <Svg 
         onPress={onPress}
+        style={style}
         fill="none"
         viewBox="0 0 14 14"
         height={size}
@@ -76,9 +78,10 @@ export const Square = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onP
     </Svg>
 );
 
-export const MinSquare = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress}) => (
+export const MinSquare = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
     <Svg 
         onPress={onPress}
+        style={style}
         fill="none"
         viewBox="0 0 14 14"
         height={size}
@@ -98,9 +101,10 @@ export const MinSquare = ({strokeColor = '#aaa', fillColor = 'none', size = 14, 
     </Svg>
 );
 
-export const CheckSquare = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress}) => (
+export const CheckSquare = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
     <Svg 
         onPress={onPress}
+        style={style}
         fill="none"
         viewBox="0 0 14 14"
         height={size}
@@ -126,9 +130,10 @@ export const CheckSquare = ({strokeColor = '#aaa', fillColor = 'none', size = 14
     </Svg>
 );
 
-export const Circle = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress}) => (
+export const Circle = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
     <Svg 
         onPress={onPress}
+        style={style}
         fill="none"
         viewBox="0 0 14 14"
         height={size}
@@ -145,9 +150,10 @@ export const Circle = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onP
     </Svg>
 );
 
-export const VisibleEye = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress}) => (
+export const VisibleEye = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
     <Svg 
         onPress={onPress}
+        style={style}
         fill="none"
         viewBox="0 0 14 14"
         height={size}
@@ -176,9 +182,10 @@ export const VisibleEye = ({strokeColor = '#aaa', fillColor = 'none', size = 14,
     </Svg>
 );
 
-export const InvisibleEye = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress}) => (
+export const InvisibleEye = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
     <Svg 
         onPress={onPress}
+        style={style}
         fill="none"
         viewBox="0 0 14 14"
         height={size}
@@ -207,9 +214,10 @@ export const InvisibleEye = ({strokeColor = '#aaa', fillColor = 'none', size = 1
     </Svg>
 );
 
-export const Envelope = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress}) => (
+export const Envelope = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
     <Svg 
         onPress={onPress}
+        style={style}
         fill="none"
         viewBox="0 0 14 14"
         height={size}
@@ -235,9 +243,10 @@ export const Envelope = ({strokeColor = '#aaa', fillColor = 'none', size = 14, o
     </Svg>
 );
 
-export const Lock = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress}) => (
+export const Lock = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
     <Svg 
         onPress={onPress}
+        style={style}
         fill="none"
         viewBox="0 0 14 14"
         height={size}
@@ -258,6 +267,61 @@ export const Lock = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPre
               strokeLinecap="round"
               strokeLinejoin="round"
               d="M7 10a.5.5 0 100-1 .5.5 0 000 1z"
+            />
+          </G>
+    </Svg>
+);
+
+export const UserCircle = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
+    <Svg 
+        onPress={onPress}
+        style={style}
+        fill="none"
+        viewBox="0 0 14 14"
+        height={size}
+        width={size}>
+          <G strokeWidth={1}>
+            <Path
+              fill="#fff"
+              d="M7 8a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM11.271 11.9A6.475 6.475 0 017 13.5a6.475 6.475 0 01-4.271-1.6A4.997 4.997 0 017 9.5c1.809 0 3.393.96 4.271 2.4z"
+            />
+            <Path
+              fill={fillColor}
+              fillRule="evenodd"
+              d="M2.729 11.9A4.997 4.997 0 017 9.5c1.809 0 3.393.96 4.271 2.4a6.5 6.5 0 10-8.543 0zM7 8a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"
+              clipRule="evenodd"
+            />
+            <Path
+              stroke={strokeColor}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M7 8a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM2.73 11.9a5 5 0 018.54 0"
+            />
+            <Path
+              stroke={strokeColor}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M7 13.5a6.5 6.5 0 100-13 6.5 6.5 0 000 13z"
+            />
+          </G>
+    </Svg>
+);
+
+export const CrossCircle = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
+    <Svg 
+        onPress={onPress}
+        style={style}
+        fill="none"
+        viewBox="0 0 14 14"
+        height={size}
+        width={size}>
+          <G strokeWidth={1}>
+            <Path fill={fillColor} d="M7 13.5a6.5 6.5 0 100-13 6.5 6.5 0 000 13z" />
+            <Path
+              stroke={strokeColor}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M7 13.5a6.5 6.5 0 100-13 6.5 6.5 0 000 13zM9.121 4.879L4.88 9.12M4.879 4.879L9.12 9.12"
             />
           </G>
     </Svg>

@@ -1,4 +1,6 @@
+import SplashScreen from './SplashScreen';
 import Login from './Login';
 import Home from './Home';
+import CheckPatrol from './CheckPatrol';
 
-export {Login, Home};
+export {SplashScreen, Login, Home, CheckPatrol};

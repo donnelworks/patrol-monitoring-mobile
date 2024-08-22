@@ -24,6 +24,8 @@
                     "@modules": "./src/modules/index",
                     "@themes": "./src/themes/index",
                     "@styles": "./src/styles/index",
+                    "@helpers": "./src/helpers/index",
+                    "@services": "./src/services/index",
                 }
             } 
         ] 

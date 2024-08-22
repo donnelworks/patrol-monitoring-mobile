@@ -1,28 +1,55 @@
-import {StyleSheet, View, FlatList} from 'react-native';
-import React from 'react';
+import {StyleSheet, ActivityIndicator, FlatList, View} from 'react-native';
+import React, {useState, useEffect} from 'react';
 import {ActivityList, Text} from '@components';
 import {Screen, Grid, Icon, Gap} from '@themes';
-import {colors} from '@styles';
+import { colors } from '@styles';
+import { getActivity, logout } from '@services';
+import { fineLocationPermission } from '@helpers';
 
 const Home = ({navigation}) => {
-  const activities = [
-    {
-      id: 1,
-      time: "13:30",
-      activity: "Patroli di Jembatan Baru, Cengkareng",
-      region: "Cengkareng",
-      status: "0",
-      onPress: () => {},
-    },
-    {
-      id: 2,
-      time: "14:00",
-      activity: "Patroli di Terminal Kalideres",
-      region: "Kalideres",
-      status: "0",
-      onPress: () => {},
-    },
-  ];
+  const [activities, setActivities] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadActivity();
+  }, []);
+
+  const loadActivity = async () => {
+    try {
+      const res = await getActivity();
+
+      if (res.success) {
+        setLoading(false);
+        setActivities(res?.data);
+      }
+    } catch (error) {
+      if (error.statusMessage === "SESSION_ERROR") {
+        await logout();
+        navigation.replace('login');
+      }
+    }
+  }
+
+  const onCheckPatrolHandler = async (item) => {
+    try {
+      const result = await fineLocationPermission();
+      console.log(result);
+      
+      // navigation.navigate('checkPatrol');
+    } catch (error) {
+      
+    }
+  }
+
+  if (loading) {
+    return (
+      <Screen justifyContent="center">
+        <Screen.Section>
+          <ActivityIndicator size="large" color={colors.secondary} />
+        </Screen.Section>
+      </Screen>
+    )
+  }
 
   return (
     <Screen>
@@ -49,7 +76,7 @@ const Home = ({navigation}) => {
         </Grid.Row>
       </Screen.Section>
 
-      <Screen.Section>
+      {!!activities.length && <Screen.Section>
         <Grid.Row>
           <Grid.Col xs={12}>
             <FlatList
@@ -57,7 +84,13 @@ const Home = ({navigation}) => {
               keyExtractor={item => item.id}
               renderItem={({item, index}) => {
                 return (
-                  <ActivityList time={item.time} activity={item.activity} region={item.region} status={item.status} />
+                  <ActivityList 
+                    time={item.time}
+                    activity={item.activity}
+                    region={item.region_name}
+                    status={item.status_checkin}
+                    onPress={onCheckPatrolHandler}
+                  />
                 );
               }}
               keyboardShouldPersistTaps="handled"
@@ -70,7 +103,17 @@ const Home = ({navigation}) => {
             />
           </Grid.Col>
         </Grid.Row>
-      </Screen.Section>
+      </Screen.Section>}
+
+      {!activities.length && <Screen.Section>
+        <Grid.Row>
+          <Grid.Col xs={12}>
+            <View style={{alignItems: 'center', flex: 1, justifyContent: 'center'}}>
+              <Text size={12} type="OpenSansSemiBold" color="border">Tidak ada kegiatan</Text>
+            </View>
+          </Grid.Col>
+        </Grid.Row>
+      </Screen.Section>}
     </Screen>
   );
 };
