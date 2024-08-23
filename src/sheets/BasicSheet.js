@@ -7,7 +7,7 @@ import {colors} from '@styles';
 
 const BasicSheet = (props) => {
 
-  const vegieData = props.payload.data;
+  // const vegieData = props.payload.data;
 
   return (
     <ActionSheet

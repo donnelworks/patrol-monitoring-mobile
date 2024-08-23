@@ -252,13 +252,13 @@ const useGridStyles = () => {
   return gridStyles;
 };
 
-const Row = ({children}) => {
+const Row = ({children, rowStyles}) => {
   const gridStyles = useGridStyles();
 
-  return <View style={gridStyles.row}>{children}</View>;
+  return <View style={[gridStyles.row, rowStyles]}>{children}</View>;
 };
 
-const Col = ({children, xs, sm, md, lg}) => {
+const Col = ({children, xs, sm, md, lg, colStyles}) => {
   const columns_xs = "col_" + xs;
 	const columns_sm = "col_sm_" + (sm || xs);
 	const columns_md = "col_md_" + (md || sm || xs);
@@ -273,6 +273,7 @@ const Col = ({children, xs, sm, md, lg}) => {
 				gridStyles[columns_sm],
 				gridStyles[columns_md],
 				gridStyles[columns_lg],
+        {colStyles}
 			]}>
 			{children}
 		</View>

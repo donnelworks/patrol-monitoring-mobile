@@ -1,7 +1,7 @@
 import {StyleSheet, ActivityIndicator, FlatList, View} from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {ActivityList, Text} from '@components';
-import {Screen, Grid, Icon, Gap} from '@themes';
+import {ActivityList, Button, Text} from '@components';
+import {Screen, Grid, Gap} from '@themes';
 import { colors } from '@styles';
 import { getActivity, logout } from '@services';
 import { fineLocationPermission } from '@helpers';
@@ -17,7 +17,6 @@ const Home = ({navigation}) => {
   const loadActivity = async () => {
     try {
       const res = await getActivity();
-
       if (res.success) {
         setLoading(false);
         setActivities(res?.data);
@@ -32,13 +31,19 @@ const Home = ({navigation}) => {
 
   const onCheckPatrolHandler = async (item) => {
     try {
-      const result = await fineLocationPermission();
-      console.log(result);
-      
-      // navigation.navigate('checkPatrol');
+      const permissionResult = await fineLocationPermission();
+      if (permissionResult) {
+        navigation.navigate('checkPatrol', item);
+      }
     } catch (error) {
+      console.log('error', error);
       
     }
+  }
+
+  const onReloadHandler = () => {
+    setLoading(true);
+    loadActivity();
   }
 
   if (loading) {
@@ -89,7 +94,7 @@ const Home = ({navigation}) => {
                     activity={item.activity}
                     region={item.region_name}
                     status={item.status_checkin}
-                    onPress={onCheckPatrolHandler}
+                    onPress={() => onCheckPatrolHandler(item)}
                   />
                 );
               }}
@@ -105,11 +110,18 @@ const Home = ({navigation}) => {
         </Grid.Row>
       </Screen.Section>}
 
-      {!activities.length && <Screen.Section>
+      {!activities.length && 
+      <Screen.Section justifyContent='center' style={{flex: 1}}>
         <Grid.Row>
           <Grid.Col xs={12}>
-            <View style={{alignItems: 'center', flex: 1, justifyContent: 'center'}}>
-              <Text size={12} type="OpenSansSemiBold" color="border">Tidak ada kegiatan</Text>
+            <View style={{alignItems: 'center'}}>
+              <Text type="OpenSansSemiBold" color="border">Tidak ada kegiatan</Text>
+            </View>
+          </Grid.Col>
+          <Grid.Col xs={12}>
+            <Gap height={10} />
+            <View style={{alignItems: 'center'}}>
+              <Button title="Muat Ulang" onPress={onReloadHandler} />
             </View>
           </Grid.Col>
         </Grid.Row>

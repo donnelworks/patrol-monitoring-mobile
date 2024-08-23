@@ -327,3 +327,89 @@ export const CrossCircle = ({strokeColor = '#aaa', fillColor = 'none', size = 14
     </Svg>
 );
 
+export const WatchTime = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
+    <Svg 
+        onPress={onPress}
+        style={style}
+        fill="none"
+        viewBox="0 0 14 14"
+        height={size}
+        width={size}>
+          <G strokeWidth={1}>
+            <Path
+              fill={fillColor}
+              d="M9.5 12.5v-1.75h-.012A4.479 4.479 0 017 11.5c-.92 0-1.776-.276-2.488-.75H4.5v1.75a1 1 0 001 1h3a1 1 0 001-1z"
+            />
+            <Path fill="#fff" d="M7 11.5a4.5 4.5 0 100-9 4.5 4.5 0 000 9z" />
+            <Path
+              fill={fillColor}
+              d="M9.5 1.5v1.75h-.012A4.479 4.479 0 007 2.5c-.92 0-1.776.276-2.488.75H4.5V1.5a1 1 0 011-1h3a1 1 0 011 1z"
+            />
+            <Path
+              stroke={strokeColor}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M7 4.875V7l1.25 1.25"
+            />
+            <Path
+              stroke={strokeColor}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M7 11.5a4.5 4.5 0 100-9 4.5 4.5 0 000 9z"
+            />
+            <Path
+              stroke={strokeColor}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9.5 3.25V1.5a1 1 0 00-1-1h-3a1 1 0 00-1 1v1.75M9.5 10.75v1.75a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1.75"
+            />
+          </G>
+    </Svg>
+);
+
+export const Calendar = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
+    <Svg 
+        onPress={onPress}
+        style={style}
+        fill="none"
+        viewBox="0 0 14 14"
+        height={size}
+        width={size}>
+          <Path
+            fill={fillColor}
+            d="M.793 13.207A1 1 0 01.5 12.5v-7h13v7a1 1 0 01-1 1h-11a1 1 0 01-.707-.293z"
+          />
+          <Path
+            fill="#fff"
+            d="M.793 2.293A1 1 0 011.5 2h11a1 1 0 011 1v2.5H.5V3a1 1 0 01.293-.707z"
+          />
+          <Path
+            stroke={strokeColor}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M1.5 2a1 1 0 00-1 1v9.5a1 1 0 001 1h11a1 1 0 001-1V3a1 1 0 00-1-1h-2M.5 5.5h13M3.5.5v3M10.5.5v3M3.5 2h5"
+            strokeWidth={1}
+          />
+    </Svg>
+);
+
+export const Flag = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
+    <Svg 
+        onPress={onPress}
+        style={style}
+        fill="none"
+        viewBox="0 0 14 14"
+        height={size}
+        width={size}>
+          <G strokeWidth={1}>
+            <Path fill={fillColor} d="M2 9.5v-9L12 5 2 9.5z" />
+            <Path
+              stroke={strokeColor}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M2 9.5v-9L12 5 2 9.5zM2 .5v13"
+            />
+        </G>
+    </Svg>
+);
+
