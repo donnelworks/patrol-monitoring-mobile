@@ -8,9 +8,9 @@ import {
 import React from 'react';
 import {colors, fonts} from '@styles';
 
-const Button = ({title, disabled, loadingBtn, onPress}) => {
+const Button = ({title, fillColor, disabled, loadingBtn, onPress}) => {
   return (
-    <TouchableOpacity style={[styles.button, {backgroundColor: disabled ? colors.border : colors.secondary}]} onPress={onPress} disabled={disabled}>
+    <TouchableOpacity style={[styles.button, {backgroundColor: fillColor ? fillColor : colors.secondary}]} onPress={onPress} disabled={disabled}>
       {loadingBtn ? (<ActivityIndicator color="#FFFFFF" />) : (<Text style={styles.buttonText}>{title}</Text>)}
     </TouchableOpacity>
   );

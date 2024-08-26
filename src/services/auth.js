@@ -5,6 +5,7 @@ export const login = async (data) => {
     try {
         const res = await request('auth/login', data);
         await AsyncStorage.setItem('userId', res.data.id);
+        await AsyncStorage.setItem('userName', res.data.name);
         await AsyncStorage.setItem('token', res.data.token);
         return res;
     } catch (error) {
@@ -23,5 +24,8 @@ export const sessionCheck = async () => {
 }
 
 export const logout = async () => {
+    const id = await AsyncStorage.getItem('userId');
+    const res = await request('auth/logout', {id});
     await AsyncStorage.clear();
+    return res;
 }

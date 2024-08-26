@@ -1,27 +1,33 @@
 import {StyleSheet, ActivityIndicator, FlatList, View} from 'react-native';
-import React, {useState, useEffect} from 'react';
-import {ActivityList, Button, Text} from '@components';
-import {Screen, Grid, Gap} from '@themes';
+import React, {useState, useCallback} from 'react';
+import {ActivityList, Button, Text, Toast} from '@components';
+import {Screen, Grid, Gap, Icon} from '@themes';
 import { colors } from '@styles';
-import { getActivity, logout } from '@services';
+import { activityStatusCheck, getActivity, logout } from '@services';
 import { fineLocationPermission } from '@helpers';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 
 const Home = ({navigation}) => {
   const [activities, setActivities] = useState([]);
+  const [toastMessage, setToastMessage] = useState("");
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    loadActivity();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      loadActivity();
+    }, [])
+  );
 
   const loadActivity = async () => {
     try {
       const res = await getActivity();
       if (res.success) {
-        setLoading(false);
         setActivities(res?.data);
+        setLoading(false);
       }
     } catch (error) {
+      setLoading(false);
       if (error.statusMessage === "SESSION_ERROR") {
         await logout();
         navigation.replace('login');
@@ -31,13 +37,26 @@ const Home = ({navigation}) => {
 
   const onCheckPatrolHandler = async (item) => {
     try {
+      setToastMessage("");
       const permissionResult = await fineLocationPermission();
+      const userName = await AsyncStorage.getItem('userName');
       if (permissionResult) {
-        navigation.navigate('checkPatrol', item);
+        setLoading(true);
+        const res = await activityStatusCheck(item);
+        if (res.success) {
+          navigation.navigate('checkPatrol', {...item, userName});
+        }
       }
     } catch (error) {
-      console.log('error', error);
-      
+      setLoading(false);
+      if (error.statusMessage === "SESSION_ERROR") {
+        await logout();
+        navigation.replace('login');
+      } else if (error.statusMessage === "IS_ACTIVITY_ACTIVE") {
+        setToastMessage(error.data);
+      } else {
+        console.log('error', error);
+      }
     }
   }
 
@@ -46,10 +65,15 @@ const Home = ({navigation}) => {
     loadActivity();
   }
 
+  const onLogout = async () => {
+    await logout();
+    navigation.replace('login');
+  }
+
   if (loading) {
     return (
       <Screen justifyContent="center">
-        <Screen.Section>
+        <Screen.Section alignItems="center">
           <ActivityIndicator size="large" color={colors.secondary} />
         </Screen.Section>
       </Screen>
@@ -58,37 +82,82 @@ const Home = ({navigation}) => {
 
   return (
     <Screen>
+      {!!toastMessage.length && <Toast messages={toastMessage} />}
       {/* Header */}
       <Screen.Section padding="0 15 0 15">
         <Grid.Row>
-          <Grid.Col xs={12}>
+          <Grid.Col xs={6}>
             <Text type="OpenSansExtraBold" size={28} color="primary">
               SIJAGA
             </Text>
           </Grid.Col>
-        </Grid.Row>
-      </Screen.Section>
-
-      {/* Title List */}
-      <Screen.Section padding="0 15 0 15">
-        <Grid.Row>
-          <Grid.Col xs={12}>
-            <Gap height={20} />
-            <Text type="OpenSansBold" size={16}>
-              Pilih Kegiatan
-            </Text>
+          <Grid.Col xs={6}>
+            <View style={{justifyContent: 'center', alignItems: 'flex-end', flex: 1}}>
+              <Icon.Logout size={23} fillColor={colors.softPrimary} strokeColor={colors.primary} onPress={() => onLogout()} />
+            </View>
           </Grid.Col>
         </Grid.Row>
       </Screen.Section>
 
-      {!!activities.length && <Screen.Section>
-        <Grid.Row>
-          <Grid.Col xs={12}>
-            <FlatList
-              data={activities}
-              keyExtractor={item => item.id}
-              renderItem={({item, index}) => {
-                return (
+      {!!activities.length && 
+        <>
+          <Screen.Section padding="0 15 0 15">
+            <Grid.Row>
+              <Grid.Col xs={12}>
+                <Gap height={20} />
+                <Text type="OpenSansBold" size={16}>
+                  Pilih Kegiatan
+                </Text>
+              </Grid.Col>
+            </Grid.Row>
+          </Screen.Section>
+          <Screen.Section style={{flex: 1}}>
+            <Grid.Row>
+              <Grid.Col xs={12}>
+                <FlatList
+                  data={activities}
+                  keyExtractor={item => item.id}
+                  renderItem={({item}) => {
+                    if (item?.status_checkin !== "1") {
+                      return (
+                        <ActivityList 
+                          time={item.time}
+                          activity={item.activity}
+                          region={item.region_name}
+                          status={item.status_checkin}
+                          onPress={() => onCheckPatrolHandler(item)}
+                        />
+                      );
+                    }
+                  }}
+                  keyboardShouldPersistTaps="handled"
+                  showsVerticalScrollIndicator={false}
+                  contentContainerStyle={{
+                    paddingTop: 10,
+                    paddingBottom: 120,
+                    paddingHorizontal: 15
+                  }}
+                />
+              </Grid.Col>
+            </Grid.Row>
+          </Screen.Section>
+          
+          {activities?.map(item => {
+            if (item?.status_checkin === "1") {
+              return (
+                <Screen.Section 
+                  key={item?.id}
+                  style={{
+                  backgroundColor: colors.light,
+                  borderTopWidth: 1,
+                  borderColor: colors.softGray,
+                  flex: 1,
+                  width: '100%',
+                  position: 'absolute',
+                  bottom: 0,
+                }}
+                padding='10 15 10 15'
+                >
                   <ActivityList 
                     time={item.time}
                     activity={item.activity}
@@ -96,26 +165,20 @@ const Home = ({navigation}) => {
                     status={item.status_checkin}
                     onPress={() => onCheckPatrolHandler(item)}
                   />
-                );
-              }}
-              keyboardShouldPersistTaps="handled"
-              showsVerticalScrollIndicator={false}
-              contentContainerStyle={{
-                paddingTop: 10,
-                paddingBottom: 20,
-                paddingHorizontal: 15
-              }}
-            />
-          </Grid.Col>
-        </Grid.Row>
-      </Screen.Section>}
+                </Screen.Section>
+              )
+            }
+          })}
+        </>
+      }
 
       {!activities.length && 
-      <Screen.Section justifyContent='center' style={{flex: 1}}>
+      <Screen.Section justifyContent='center' padding='0 15 0 15' style={{flex: 1}}>
         <Grid.Row>
           <Grid.Col xs={12}>
             <View style={{alignItems: 'center'}}>
-              <Text type="OpenSansSemiBold" color="border">Tidak ada kegiatan</Text>
+              <Text type="OpenSansBold" color="border" size={18}>Tidak ada kegiatan</Text>
+              <Text color="border" size={12} style={{textAlign: 'center'}}>Atau hubungi Admin untuk diberikan akses</Text>
             </View>
           </Grid.Col>
           <Grid.Col xs={12}>

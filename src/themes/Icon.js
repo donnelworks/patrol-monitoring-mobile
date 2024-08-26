@@ -413,3 +413,26 @@ export const Flag = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPre
     </Svg>
 );
 
+export const Logout = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
+    <Svg 
+        onPress={onPress}
+        style={style}
+        fill="none"
+        viewBox="0 0 14 14"
+        height={size}
+        width={size}>
+          <G strokeWidth={1}>
+            <Path
+              fill={fillColor}
+              d="M9.5 12.5a1 1 0 01-1 1h-7a1 1 0 01-1-1v-11a1 1 0 011-1h7a1 1 0 011 1v11z"
+            />
+            <Path
+              stroke={strokeColor}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9.5 10.5v2a1 1 0 01-1 1h-7a1 1 0 01-1-1v-11a1 1 0 011-1h7a1 1 0 011 1v2M6.5 7h7M11.5 5l2 2-2 2"
+            />
+        </G>
+    </Svg>
+);
+

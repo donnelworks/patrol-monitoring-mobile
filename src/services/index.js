@@ -6,4 +6,7 @@ export {
 
 export {
     getActivity,
+    saveActivity,
+    activityStatusCheck,
+    positionCheck,
 } from "./activity";

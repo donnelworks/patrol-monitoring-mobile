@@ -1,6 +1,6 @@
 import request from "./request";
-import {timeFormat} from "./format";
+import {timeFormat, dateFormat} from "./format";
 import {fineLocationPermission} from "./permission";
 
 
-export {request, timeFormat, fineLocationPermission};
+export {request, timeFormat, dateFormat, fineLocationPermission};
