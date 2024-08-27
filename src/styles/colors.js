@@ -10,7 +10,7 @@ const colors = {
   shadow: '#EDF2FA',
   border: '#7C98B6',
   success: '#4AAF41',
-  softSuccess: '#86D37E',
+  softSuccess: '#F5FBF4',
 };
 
 export default colors;

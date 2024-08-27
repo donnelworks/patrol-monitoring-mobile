@@ -29,8 +29,8 @@ const Home = ({navigation}) => {
     } catch (error) {
       setLoading(false);
       if (error.statusMessage === "SESSION_ERROR") {
-        await logout();
         navigation.replace('login');
+        await logout();
       }
     }
   }
@@ -50,8 +50,10 @@ const Home = ({navigation}) => {
     } catch (error) {
       setLoading(false);
       if (error.statusMessage === "SESSION_ERROR") {
-        await logout();
         navigation.replace('login');
+        await logout();
+      } else if (error.statusMessage === "NOT_ACCESS_MEMBER") {
+        setToastMessage(error.data);
       } else if (error.statusMessage === "IS_ACTIVITY_ACTIVE") {
         setToastMessage(error.data);
       } else {

@@ -73,6 +73,10 @@ export const saveActivity = async (data) => {
             status_checkin: data?.status_checkin,
         }
 
+        console.log(JSON.stringify(requestData, null, 2));
+        return;
+        
+
         const res = await request('activity/save_activity', requestData);
         return res;
     } catch (error) {

@@ -19,3 +19,22 @@ export const fineLocationPermission = async () => {
         return false;
     }
 }
+
+export const cameraPermission = async () => {
+    try {
+        const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.CAMERA
+        );
+
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            return true;
+        } else if (granted == PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
+            SheetManager?.show('permission-setting-sheet', {payload: {data: "camera"}})
+            return false;
+        } else {
+            return false;
+        }
+    } catch (error) {
+        return false;
+    }
+}

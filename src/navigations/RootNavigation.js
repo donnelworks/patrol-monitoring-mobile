@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {CheckPatrol, Finish, Home, Login, SplashScreen} from '@screens';
+import {CheckPatrol, CheckPatrolCamera, Finish, Home, Login, SplashScreen} from '@screens';
 import {colors, fonts} from '@styles';
 import { StyleSheet } from 'react-native';
 
@@ -32,6 +32,11 @@ const RootNavigation = () => {
           headerTitleAlign: 'center',
           headerTitleStyle: styles.headerTitleStyle
         }}
+      />
+      <Stack.Screen
+        name="checkPatrolCamera"
+        component={CheckPatrolCamera}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="finish"

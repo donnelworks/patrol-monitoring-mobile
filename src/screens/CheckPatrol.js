@@ -1,9 +1,9 @@
-import { StyleSheet, ScrollView, ActivityIndicator} from 'react-native'
-import React, {useState} from 'react'
+import { View, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity, Image} from 'react-native'
+import React, {useState, useEffect} from 'react'
 import { Grid, Icon, Screen } from '@themes'
 import { Button, Card, Input, Text, Toast } from '@components'
 import { colors } from '@styles'
-import { dateFormat, timeFormat } from '@helpers'
+import { cameraPermission, dateFormat, timeFormat } from '@helpers'
 import { logout, positionCheck, saveActivity } from '@services'
 import Geolocation from 'react-native-geolocation-service'
 
@@ -14,6 +14,12 @@ const CheckPatrol = ({navigation, route}) => {
   const [toastMessage, setToastMessage] = useState("");
   const [isGetPosition, setIsGetPosition] = useState(false);
   const[loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (route.params?.media) {
+      setForm(prevState => ({...prevState, media: route.params?.media}));
+    }
+  }, [route.params?.media])
 
   const onSaveActivityHandler = async (memberLatitude, memberLongitude) => {
     try {
@@ -36,8 +42,8 @@ const CheckPatrol = ({navigation, route}) => {
     } catch (error) {
       setLoading(false);
       if (error.statusMessage === "SESSION_ERROR") {
-        await logout();
         navigation.replace('login');
+        await logout();
       } else if (error.statusMessage === "POSITION_NOT_VALID") {
         setToastMessage(error.data);
       } else {
@@ -60,6 +66,17 @@ const CheckPatrol = ({navigation, route}) => {
       },
       {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000}
     );
+  }
+
+  const onCameraHandler = async () => {
+    try {
+      const permissionResult = await cameraPermission();
+      if (permissionResult) {
+        navigation.navigate('checkPatrolCamera');
+      }
+    } catch (error) {
+      
+    }
   }
 
   if (loading || isGetPosition) {
@@ -152,21 +169,36 @@ const CheckPatrol = ({navigation, route}) => {
         <Screen.Section padding='15 15 15 15'>
           <Card shadow>
             <Grid.Row rowStyles={{paddingBottom: 5}}>
-              
+              {form.media && (
                 <Grid.Col xs={12}>
-                  <Input
-                    value={form.notes}
-                    onChangeText={(text) => setForm({...form, notes: text})}
-                    placeholder="Masukan Catatan Kegiatan"
-                    multiline={true}
-                    numberOfLines={4}
-                    style={{
-                      textAlignVertical: 'top',
-                    }}
-                    keyboardType='default'
-                  />
+                  <View style={{flex: 1, alignItems: 'center', backgroundColor: colors.softGray, borderRadius: 8, padding: 15, marginBottom: 10}}>
+                    <Image
+                        style={{ height: 200, width: 200, borderRadius: 8, backgroundColor:'#000000' }}
+                        source={{ uri: form.media }}
+                        resizeMode="cover"
+                    />
+                  </View>
                 </Grid.Col>
-              
+              )}
+              <Grid.Col xs={12}>
+                <TouchableOpacity style={styles.takePhoto} onPress={onCameraHandler}>
+                  <Icon.Camera size={20} strokeColor={colors.success} fillColor={colors.softSuccess} style={{marginRight: 10}} />
+                  <Text type="OpenSansSemiBold" color="success">Ambil Foto</Text>
+                </TouchableOpacity>
+              </Grid.Col>
+              <Grid.Col xs={12}>
+                <Input
+                  value={form.notes}
+                  onChangeText={(text) => setForm({...form, notes: text})}
+                  placeholder="Masukan Catatan Kegiatan"
+                  multiline={true}
+                  numberOfLines={4}
+                  style={{
+                    textAlignVertical: 'top',
+                  }}
+                  keyboardType='default'
+                />
+              </Grid.Col>
               <Grid.Col xs={12}>
                 <Button title={params?.status_checkin === "0" ? "Check In" : "Check Out"} fillColor={params?.status_checkin === "0" ? colors.primary : colors.secondary} onPress={getPosition} />
               </Grid.Col>
@@ -180,4 +212,17 @@ const CheckPatrol = ({navigation, route}) => {
 
 export default CheckPatrol
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  takePhoto: {
+    flexDirection: 'row',
+    backgroundColor: colors.softSuccess,
+    marginBottom: 10,
+    paddingVertical: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8,
+    borderWidth: 2,
+    borderStyle: 'dotted',
+    borderColor: colors.success
+  }
+})

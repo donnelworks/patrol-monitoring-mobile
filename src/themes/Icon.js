@@ -327,6 +327,32 @@ export const CrossCircle = ({strokeColor = '#aaa', fillColor = 'none', size = 14
     </Svg>
 );
 
+export const CheckCircle = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
+    <Svg 
+        onPress={onPress}
+        style={style}
+        fill="none"
+        viewBox="0 0 14 14"
+        height={size}
+        width={size}>
+          <G strokeWidth={1}>
+            <Path fill={fillColor} d="M7 13.5a6.5 6.5 0 100-13 6.5 6.5 0 000 13z" />
+            <Path
+              stroke={strokeColor}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M7 13.5a6.5 6.5 0 100-13 6.5 6.5 0 000 13z"
+            />
+            <Path
+              stroke={strokeColor}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M10 4.5l-4 5L4 8"
+            />
+          </G>
+    </Svg>
+);
+
 export const WatchTime = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
     <Svg 
         onPress={onPress}
@@ -431,6 +457,135 @@ export const Logout = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onP
               strokeLinecap="round"
               strokeLinejoin="round"
               d="M9.5 10.5v2a1 1 0 01-1 1h-7a1 1 0 01-1-1v-11a1 1 0 011-1h7a1 1 0 011 1v2M6.5 7h7M11.5 5l2 2-2 2"
+            />
+        </G>
+    </Svg>
+);
+
+export const Camera = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
+    <Svg 
+        onPress={onPress}
+        style={style}
+        fill="none"
+        viewBox="0 0 14 14"
+        height={size}
+        width={size}>
+          <G strokeWidth={1}>
+            <Path
+              fill="none"
+              d="M7 9.75a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z"
+            />
+            <Path
+              fill={fillColor}
+              fillRule="evenodd"
+              d="M13.207 4.293A1 1 0 0113.5 5v6a1 1 0 01-1 1h-11a1 1 0 01-1-1V5a1 1 0 011-1h2L5 2h4l1.5 2h2a1 1 0 01.707.293zM9.25 7.5a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"
+              clipRule="evenodd"
+            />
+            <Path
+              stroke={strokeColor}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M7 9.75a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z"
+            />
+            <Path
+              stroke={strokeColor}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M13.5 5a1 1 0 00-1-1h-2L9 2H5L3.5 4h-2a1 1 0 00-1 1v6a1 1 0 001 1h11a1 1 0 001-1V5z"
+            />
+        </G>
+    </Svg>
+);
+
+export const CircleCapture = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
+    <Svg 
+        onPress={onPress}
+        style={style}
+        fill="none"
+        viewBox="0 0 14 14"
+        height={size}
+        width={size}>
+          <G strokeWidth={1}>
+            <Path
+              fill={fillColor}
+              d="M7 11.661a4.661 4.661 0 100-9.322 4.661 4.661 0 000 9.322z"
+              strokeWidth={0.71708}
+            />
+            <Path
+              stroke={strokeColor}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M7 13.5a6.5 6.5 0 100-13 6.5 6.5 0 000 13z"
+              strokeWidth={1}
+            />
+        </G>
+    </Svg>
+);
+
+export const SwitchCamera = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
+    <Svg 
+        onPress={onPress}
+        style={style}
+        fill="none"
+        viewBox="0 0 14 14"
+        height={size}
+        width={size}>
+          <G strokeWidth={1}>
+            <Path
+              fill={fillColor}
+              d="M13.5 4.5a1 1 0 00-1-1h-2L9 1.5H5l-1.5 2h-2a1 1 0 00-1 1v7a1 1 0 001 1h11a1 1 0 001-1v-7z"
+            />
+            <Path
+              stroke={strokeColor}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M13.5 4.5a1 1 0 00-1-1h-2L9 1.5H5l-1.5 2h-2a1 1 0 00-1 1v7a1 1 0 001 1h11a1 1 0 001-1v-7z"
+            />
+            <Path
+              stroke={strokeColor}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M10.15 8.063l-.841.636-.636-.841M9.263 8.636a2.58 2.58 0 00-3.25-3.585M3.795 6.865l.84-.636.636.841M4.682 6.293a2.58 2.58 0 003.25 3.585"
+            />
+        </G>
+    </Svg>
+);
+
+export const Flash = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
+    <Svg 
+        onPress={onPress}
+        style={style}
+        fill="none"
+        viewBox="0 0 14 14"
+        height={size}
+        width={size}>
+          <G strokeWidth={1}>
+            <Path fill={fillColor} d="M8 .5v5h3.5l-5.5 8v-5H2.5L8 .5z" />
+            <Path
+              stroke={strokeColor}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M8 .5v5h3.5l-5.5 8v-5H2.5L8 .5z"
+            />
+        </G>
+    </Svg>
+);
+
+export const FlashOff = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
+    <Svg 
+        onPress={onPress}
+        style={style}
+        fill="none"
+        viewBox="0 0 14 14"
+        height={size}
+        width={size}>
+          <G strokeWidth={1}>
+            <Path fill={fillColor} d="M8.5 5V.5L2.5 9h3v4.5l6-8.5h-3z" />
+            <Path
+              stroke={strokeColor}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M.5.5l13 13M5.19 5.19L8.5.5V5h3L8.81 8.81M7.15 11.16L5.5 13.5V9h-3l1.41-2"
             />
         </G>
     </Svg>
