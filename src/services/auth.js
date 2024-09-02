@@ -5,7 +5,10 @@ export const login = async (data) => {
     try {
         const res = await request('auth/login', data);
         await AsyncStorage.setItem('userId', res.data.id);
-        await AsyncStorage.setItem('userName', res.data.name);
+        await AsyncStorage.setItem('memberName', res.data.name);
+        await AsyncStorage.setItem('teamName', res.data.team_name);
+        await AsyncStorage.setItem('unitName', res.data.unit_name);
+        await AsyncStorage.setItem('unitShortName', res.data.unit_short_name);
         await AsyncStorage.setItem('token', res.data.token);
         return res;
     } catch (error) {

@@ -9,4 +9,5 @@ export {
     saveActivity,
     activityStatusCheck,
     positionCheck,
+    getFinishActivity,
 } from "./activity";

@@ -3,6 +3,7 @@ import React, {useEffect} from 'react'
 import { Icon, Screen } from '@themes'
 import { Button, Text } from '@components'
 import { colors } from '@styles'
+import LottieView from 'lottie-react-native'
 
 const Finish = ({navigation, route}) => {
     const status = route?.params?.status;
@@ -27,7 +28,8 @@ const Finish = ({navigation, route}) => {
     return (
         <Screen justifyContent="center">
             <Screen.Section alignItems="center" justifyContent="center" style={{flex: 1}}>
-                <Icon.Location size={150} strokeColor={colors.primary} fillColor={colors.softGray} style={{marginBottom: 10}} />
+                <LottieView source={require('../assets/lotties/success.json')} autoPlay loop={false} style={{width: 200, height: 200}}/>
+                {/* <Icon.Location size={150} strokeColor={colors.primary} fillColor={colors.softGray} style={{marginBottom: 10}} /> */}
                 <Text size={16} type="OpenSansSemiBold">Berhasil {status} Posisi</Text>
                 <Text>Silahkan melanjutkan aktifitas Anda</Text>
             </Screen.Section>

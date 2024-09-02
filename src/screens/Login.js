@@ -24,7 +24,7 @@ const Login = ({navigation}) => {
 
   const onLoginHandler = async () => {
     try {
-      setLoading(!loading);
+      setLoading(true);
       setAlertMessage("");
       setFormValidation({...formValidation, username: "", password: ""});
 
@@ -65,7 +65,7 @@ const Login = ({navigation}) => {
       </Screen.Section>
       <Gap height={50} />
       <Screen.Section padding='0 30 0 30'>
-        {alertMessage.length > 0 && <Alert message={alertMessage} />}
+        {!!alertMessage.length && <Alert message={alertMessage} type="error" />}
         <Input
           value={form.username}
           onChangeText={(text) => updateText(text, 'username')}

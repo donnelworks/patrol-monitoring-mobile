@@ -11,6 +11,23 @@ export const getActivity = async () => {
     }
 }
 
+export const getFinishActivity = async (data) => {
+    try {
+        const id = await AsyncStorage.getItem('userId');
+
+        let requestData = {
+            user_id: id,
+            number: data?.number,
+            activity_id: data?.id,
+        }
+
+        const res = await request('activity/get_finish_activity', requestData);
+        return res;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export const activityStatusCheck = async (data) => {
     try {
         const id = await AsyncStorage.getItem('userId');
@@ -52,11 +69,11 @@ export const positionCheck = async (data) => {
 export const saveActivity = async (data) => {
     try {
         const userId = await AsyncStorage.getItem('userId');
-        const userName = await AsyncStorage.getItem('userName');
+        const memberName = await AsyncStorage.getItem('memberName');
 
         let requestData = {
             user_id: userId,
-            member_name: userName,
+            member_name: memberName,
             number_activity: data?.number,
             member_id: null,
             unit_short_name: data?.unit_short_name,
@@ -72,10 +89,6 @@ export const saveActivity = async (data) => {
             notes: data?.notes,
             status_checkin: data?.status_checkin,
         }
-
-        console.log(JSON.stringify(requestData, null, 2));
-        return;
-        
 
         const res = await request('activity/save_activity', requestData);
         return res;

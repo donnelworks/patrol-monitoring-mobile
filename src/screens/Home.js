@@ -1,6 +1,6 @@
-import {StyleSheet, ActivityIndicator, FlatList, View} from 'react-native';
+import {StyleSheet, ActivityIndicator, FlatList, View, RefreshControl} from 'react-native';
 import React, {useState, useCallback} from 'react';
-import {ActivityList, Button, Text, Toast} from '@components';
+import {ActivityList, Button, Card, Text, Toast} from '@components';
 import {Screen, Grid, Gap, Icon} from '@themes';
 import { colors } from '@styles';
 import { activityStatusCheck, getActivity, logout } from '@services';
@@ -11,7 +11,10 @@ import { useFocusEffect } from '@react-navigation/native';
 const Home = ({navigation}) => {
   const [activities, setActivities] = useState([]);
   const [toastMessage, setToastMessage] = useState("");
+  const [refresh, setRefresh] = useState(false);
   const [loading, setLoading] = useState(true);
+  
+  const [user, setUser] = useState({memberName: "", unitShortName: "", teamName: ""});
 
   useFocusEffect(
     useCallback(() => {
@@ -22,6 +25,10 @@ const Home = ({navigation}) => {
   const loadActivity = async () => {
     try {
       const res = await getActivity();
+      const memberName = await AsyncStorage.getItem('memberName');
+      const unitShortName = await AsyncStorage.getItem('unitShortName');
+      const teamName = await AsyncStorage.getItem('teamName');
+      setUser(prevState => ({...prevState, memberName, unitShortName, teamName}));
       if (res.success) {
         setActivities(res?.data);
         setLoading(false);
@@ -35,29 +42,47 @@ const Home = ({navigation}) => {
     }
   }
 
+  const refreshActivity = async () => {
+    try {
+      setRefresh(true);
+      const res = await getActivity();
+      if (res.success) {
+        setActivities(res?.data);
+      }
+    } catch (error) {
+      if (error.statusMessage === "SESSION_ERROR") {
+        navigation.replace('login');
+        await logout();
+      }
+    } finally {
+      setRefresh(false);
+    }
+  }
+
   const onCheckPatrolHandler = async (item) => {
     try {
       setToastMessage("");
       const permissionResult = await fineLocationPermission();
-      const userName = await AsyncStorage.getItem('userName');
       if (permissionResult) {
         setLoading(true);
-        const res = await activityStatusCheck(item);
-        if (res.success) {
-          navigation.navigate('checkPatrol', {...item, userName});
+        const resStatusCheck = await activityStatusCheck(item);
+        if (resStatusCheck.success) {
+          navigation.navigate('checkPatrol', item);
         }
       }
     } catch (error) {
-      setLoading(false);
       if (error.statusMessage === "SESSION_ERROR") {
         navigation.replace('login');
         await logout();
       } else if (error.statusMessage === "NOT_ACCESS_MEMBER") {
         setToastMessage(error.data);
+        setLoading(false);
       } else if (error.statusMessage === "IS_ACTIVITY_ACTIVE") {
         setToastMessage(error.data);
+        setLoading(false);
       } else {
         console.log('error', error);
+        setLoading(false);
       }
     }
   }
@@ -85,7 +110,6 @@ const Home = ({navigation}) => {
   return (
     <Screen>
       {!!toastMessage.length && <Toast messages={toastMessage} />}
-      {/* Header */}
       <Screen.Section padding="0 15 0 15">
         <Grid.Row>
           <Grid.Col xs={6}>
@@ -99,6 +123,28 @@ const Home = ({navigation}) => {
             </View>
           </Grid.Col>
         </Grid.Row>
+      </Screen.Section>
+
+      <Screen.Section padding="15 15 0 15">
+        <Card shadow>
+          <Grid.Row>
+            <Grid.Col xs={2}>
+              <Icon.UserCircle size={20} strokeColor={colors.primary} fillColor={colors.softPrimary} style={{alignSelf: 'center'}} />
+            </Grid.Col>
+            <Grid.Col xs={10}>
+              <Text>{user?.memberName}</Text>
+            </Grid.Col>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Col xs={2}>
+              <Icon.Flag size={20} strokeColor={colors.primary} fillColor={colors.softPrimary} style={{alignSelf: 'center'}} />
+            </Grid.Col>
+            <Grid.Col xs={10}>
+              <Text type="OpenSansBold">{user?.unitShortName}</Text>
+              <Text>{user?.teamName}</Text>
+            </Grid.Col>
+          </Grid.Row>
+        </Card>
       </Screen.Section>
 
       {!!activities.length && 
@@ -119,6 +165,14 @@ const Home = ({navigation}) => {
                 <FlatList
                   data={activities}
                   keyExtractor={item => item.id}
+                  refreshControl={
+                    <RefreshControl
+                      progressBackgroundColor="#FFFFFF"
+                      refreshing={refresh}
+                      onRefresh={refreshActivity}
+                      colors={[`${colors.secondary}`]}
+                    />
+                  }
                   renderItem={({item}) => {
                     if (item?.status_checkin !== "1") {
                       return (
@@ -127,9 +181,18 @@ const Home = ({navigation}) => {
                           activity={item.activity}
                           region={item.region_name}
                           status={item.status_checkin}
+                          border={true}
                           onPress={() => onCheckPatrolHandler(item)}
                         />
                       );
+                    } else {
+                      if (activities.length === 1) {
+                        return (
+                          <View style={{alignItems: 'center'}}>
+                            <Text type="OpenSansSemiBold" color="border">Tidak ada kegiatan</Text>
+                          </View>
+                        )
+                      }
                     }
                   }}
                   keyboardShouldPersistTaps="handled"
@@ -165,6 +228,7 @@ const Home = ({navigation}) => {
                     activity={item.activity}
                     region={item.region_name}
                     status={item.status_checkin}
+                    shadow={true}
                     onPress={() => onCheckPatrolHandler(item)}
                   />
                 </Screen.Section>

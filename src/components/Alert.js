@@ -3,10 +3,10 @@ import React from 'react'
 import Text from './Text'
 import { colors } from '@styles'
 
-const Alert = ({message}) => {
+const Alert = ({message, type}) => {
   return (
-    <View style={styles.alertContainer}>
-      <Text color="secondary" type="OpenSansSemiBold" size={12}>{message}</Text>
+    <View style={styles.alertContainer(type)}>
+      <Text color={type === "success" ? "success" : "secondary"} type="OpenSansSemiBold" size={12}>{message}</Text>
     </View>
   )
 }
@@ -14,12 +14,12 @@ const Alert = ({message}) => {
 export default Alert
 
 const styles = StyleSheet.create({
-    alertContainer: {
+    alertContainer: (type) => ({
         borderRadius: 8,
-        borderColor: colors.secondary,
+        borderColor: type === "success" ? colors.success : colors.secondary,
         borderWidth: 1,
-        backgroundColor: colors.softSecondary,
+        backgroundColor: type === "success" ? colors.softSuccess : colors.softSecondary,
         padding: 10,
         marginBottom: 10,
-    }
+    })
 })

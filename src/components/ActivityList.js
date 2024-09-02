@@ -6,10 +6,10 @@ import Text from './Text';
 import { colors } from '@styles';
 import { timeFormat } from '@helpers';
 
-const ActivityList = ({time, activity, region, status, onPress}) => {
+const ActivityList = ({time, activity, region, status, border, shadow, onPress}) => {
   return (
     <>
-      <Card shadow onPress={onPress}>
+      <Card shadow={shadow} onPress={onPress} style={{borderWidth: border ? 1 : 0, borderColor: colors.border}}>
         <Grid.Row>
           <Grid.Col xs={3}>
             <Text type="OpenSansSemiBold" size={12} color="gray">
@@ -41,7 +41,7 @@ const ActivityList = ({time, activity, region, status, onPress}) => {
                 <Icon.Circle
                   size={20}
                   strokeColor={status === "0" ? colors.border : status === "1" ? colors.secondary : colors.success}
-                  fillColor={status === "0" ? "white" : status === "1" ? colors.softSecondary : colors.softSuccess}
+                  fillColor={status === "0" ? "white" : status === "1" ? colors.secondary : colors.success}
                 />
             </View>
           </Grid.Col>

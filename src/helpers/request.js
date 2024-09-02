@@ -1,8 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { endpoint } from "./path";
 
 const request = async (ROUTE, REQUEST_PAYLOAD) => {
-    // const BASE_URL = 'https://sijaga.siskasoftware.com/api/';
-    const BASE_URL = 'https://dev.siskasoftware.com/api/';
+    const END_POINT = endpoint;
     const AUTH_TOKEN = await AsyncStorage.getItem('token');
 
     let bodyData = JSON.stringify(REQUEST_PAYLOAD);
@@ -20,7 +20,7 @@ const request = async (ROUTE, REQUEST_PAYLOAD) => {
         requestObject.headers.Authorization = AUTH_TOKEN;
     }
     
-    const res = await fetch(BASE_URL + ROUTE, requestObject);
+    const res = await fetch(END_POINT + ROUTE, requestObject);
     
     let resData = await res.text();
     let responseJson = JSON.parse(resData);

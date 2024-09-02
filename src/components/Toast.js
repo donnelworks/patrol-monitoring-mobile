@@ -72,13 +72,13 @@ const Toast = ({messages}) => {
     const [toastMessage, setToastMessage] = useState([]);
 
     useEffect(() => {
-        setToastMessage(prevState => [...prevState, messages]);
+      setToastMessage(prevState => [...prevState, messages]);
 
-        return () => setToastMessage([]);
+      return () => setToastMessage([]);
     }, [messages]);
 
     const hideToast = (message) => {
-        setToastMessage(prevMessages => prevMessages.filter(msg => msg !== message));
+      setToastMessage(prevMessages => prevMessages.filter(msg => msg !== message));
     }
 
     return (
