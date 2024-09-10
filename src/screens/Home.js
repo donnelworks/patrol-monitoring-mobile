@@ -31,14 +31,14 @@ const Home = ({navigation}) => {
       setUser(prevState => ({...prevState, memberName, unitShortName, teamName}));
       if (res.success) {
         setActivities(res?.data);
-        setLoading(false);
       }
     } catch (error) {
-      setLoading(false);
       if (error.statusMessage === "SESSION_ERROR") {
         navigation.replace('login');
         await logout();
       }
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -71,18 +71,17 @@ const Home = ({navigation}) => {
         }
       }
     } catch (error) {
+      setLoading(false);
       if (error.statusMessage === "SESSION_ERROR") {
         navigation.replace('login');
         await logout();
-      } else if (error.statusMessage === "NOT_ACCESS_MEMBER") {
+      } else if (error.statusMessage === "ACTIVITY_IS_CANCELED") {
         setToastMessage(error.data);
-        setLoading(false);
-      } else if (error.statusMessage === "IS_ACTIVITY_ACTIVE") {
+        loadActivity();
+      } else if (error.statusMessage === "ACTIVITY_STILL_ACTIVE") {
         setToastMessage(error.data);
-        setLoading(false);
       } else {
         console.log('error', error);
-        setLoading(false);
       }
     }
   }
@@ -160,51 +159,50 @@ const Home = ({navigation}) => {
             </Grid.Row>
           </Screen.Section>
           <Screen.Section style={{flex: 1}}>
-            <Grid.Row>
-              <Grid.Col xs={12}>
-                <FlatList
-                  data={activities}
-                  keyExtractor={item => item.id}
-                  refreshControl={
-                    <RefreshControl
-                      progressBackgroundColor="#FFFFFF"
-                      refreshing={refresh}
-                      onRefresh={refreshActivity}
-                      colors={[`${colors.secondary}`]}
-                    />
-                  }
-                  renderItem={({item}) => {
-                    if (item?.status_checkin !== "1") {
-                      return (
-                        <ActivityList 
-                          time={item.time}
-                          activity={item.activity}
-                          region={item.region_name}
-                          status={item.status_checkin}
-                          border={true}
-                          onPress={() => onCheckPatrolHandler(item)}
-                        />
-                      );
-                    } else {
-                      if (activities.length === 1) {
-                        return (
-                          <View style={{alignItems: 'center'}}>
-                            <Text type="OpenSansSemiBold" color="border">Tidak ada kegiatan</Text>
-                          </View>
-                        )
-                      }
-                    }
-                  }}
-                  keyboardShouldPersistTaps="handled"
-                  showsVerticalScrollIndicator={false}
-                  contentContainerStyle={{
-                    paddingTop: 10,
-                    paddingBottom: 120,
-                    paddingHorizontal: 15
-                  }}
+            <FlatList
+              data={activities}
+              keyExtractor={item => item.id}
+              refreshControl={
+                <RefreshControl
+                  progressBackgroundColor="#FFFFFF"
+                  refreshing={refresh}
+                  onRefresh={refreshActivity}
+                  colors={[`${colors.secondary}`]}
                 />
-              </Grid.Col>
-            </Grid.Row>
+              }
+              renderItem={({item}) => {
+                if (item?.status_checkin !== "1") {
+                  return (
+                    <ActivityList 
+                      time={item.time}
+                      activity={item.activity}
+                      region={item.region_name}
+                      status={item.status_checkin}
+                      updated={item.updated}
+                      canceled={item.canceled}
+                      border={true}
+                      onPress={() => onCheckPatrolHandler(item)}
+                    />
+                  );
+                } else {
+                  if (activities.length === 1) {
+                    return (
+                      <View style={{alignItems: 'center'}}>
+                        <Text type="OpenSansSemiBold" color="border">Tidak ada kegiatan</Text>
+                      </View>
+                    )
+                  }
+                }
+              }}
+              keyboardShouldPersistTaps="handled"
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{
+                paddingTop: 10,
+                paddingBottom: 120,
+                paddingHorizontal: 15,
+                flexGrow: 1,
+              }}
+            />
           </Screen.Section>
           
           {activities?.map(item => {
@@ -228,6 +226,8 @@ const Home = ({navigation}) => {
                     activity={item.activity}
                     region={item.region_name}
                     status={item.status_checkin}
+                    updated={item.updated}
+                    canceled={item.canceled}
                     shadow={true}
                     onPress={() => onCheckPatrolHandler(item)}
                   />
@@ -244,7 +244,7 @@ const Home = ({navigation}) => {
           <Grid.Col xs={12}>
             <View style={{alignItems: 'center'}}>
               <Text type="OpenSansBold" color="border" size={18}>Tidak ada kegiatan</Text>
-              <Text color="border" size={12} style={{textAlign: 'center'}}>Atau hubungi Admin untuk diberikan akses</Text>
+              <Text color="border" size={12} style={{textAlign: 'center'}}>Atau hubungi Admin untuk informasi lebih lanjut</Text>
             </View>
           </Grid.Col>
           <Grid.Col xs={12}>

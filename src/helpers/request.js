@@ -1,7 +1,15 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { endpoint } from "./path";
+import NetInfo from "@react-native-community/netinfo";
+import { SheetManager } from "react-native-actions-sheet";
 
 const request = async (ROUTE, REQUEST_PAYLOAD) => {
+    const netInfo = await NetInfo.fetch();
+
+    if (!netInfo.isConnected) {
+        SheetManager?.show('no-internet-sheet');
+    }
+
     const END_POINT = endpoint;
     const AUTH_TOKEN = await AsyncStorage.getItem('token');
 
@@ -27,6 +35,7 @@ const request = async (ROUTE, REQUEST_PAYLOAD) => {
 
     if (!responseJson.success) {
         throw {
+            success: false,
             statusMessage: responseJson.status_message,
             data: responseJson.data
         }

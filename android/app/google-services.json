@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "92858525424",
+    "project_id": "logistik-project",
+    "storage_bucket": "logistik-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:92858525424:android:6fe60441dc79ab55df8435",
+        "android_client_info": {
+          "package_name": "com.patrolmonitoring"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyr_-bVMpj6uX5e79385QHnT3CZwGGh7k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

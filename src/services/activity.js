@@ -34,6 +34,7 @@ export const activityStatusCheck = async (data) => {
 
         let requestData = {
             user_id: id,
+            activity_id: data?.id,
             number_activity: data?.number,
             status_checkin: data?.status_checkin,
             team_id: data?.team_id,
@@ -52,6 +53,7 @@ export const positionCheck = async (data) => {
 
         let requestData = {
             user_id: id,
+            activity_id: data?.id,
             status_checkin: data?.status_checkin,
             latitude: data?.latitude,
             longitude: data?.longitude,

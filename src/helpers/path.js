@@ -1,6 +1,6 @@
 // PROD
-export const endpoint = 'https://sijaga.siskasoftware.com/api/';
-export const mediaurl = 'https://sijaga.siskasoftware.com/assets/files/media/';
+export const endpoint = 'https://sijaga.logistikresjakbar.com/api/';
+export const mediaurl = 'https://sijaga.logistikresjakbar.com/assets/files/media/';
 
 // DEV
 // export const endpoint = 'https://dev.siskasoftware.com/api/';

@@ -1,5 +1,5 @@
-import { StyleSheet, View, PanResponder, Dimensions } from 'react-native'
-import React, {useRef, useState} from 'react'
+import { StyleSheet, View, PanResponder, Dimensions, BackHandler } from 'react-native'
+import React, {useRef, useState, useEffect} from 'react'
 import { RNCamera } from 'react-native-camera'
 import { useIsFocused } from '@react-navigation/native'
 import { Icon } from '@themes'
@@ -10,6 +10,20 @@ const CheckPatrolCamera = ({navigation}) => {
   const [flash, setFlash] = useState(false);
   const [zoom, setZoom] = useState(0);
   const [switchCamera, setSwitchCamera] = useState(false);
+
+  useEffect(() => {
+    let backHandler;
+    if (photo) {
+      backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
+        onCancelCapture();
+        return true;
+      });
+    } else {
+      backHandler = BackHandler.addEventListener("hardwareBackPress", () => false);
+    }
+
+    return () => backHandler.remove();
+  }, [photo]);
 
   const onCapture = async () => {
     try {
@@ -46,42 +60,43 @@ const CheckPatrolCamera = ({navigation}) => {
   return (
     <View style={styles.container}>
       {useIsFocused() && (
-        <ZoomView
-          onZoomProgress={progress => {
-            setZoom(progress);
-          }}
-          onZoomStart={() => {
-            console.log('zoom start');
-          }}
-          onZoomEnd={() => {
-            console.log('zoom end');
-          }}>
-          <RNCamera
-            zoom={zoom}
-            ref={cameraRef}
-            style={styles.preview}
-            type={!switchCamera ? RNCamera.Constants.Type.back : RNCamera.Constants.Type.front}
-            flashMode={!flash ? RNCamera.Constants.FlashMode.off : RNCamera.Constants.FlashMode.on}
-            captureAudio={false}
-            pauseAfterCapture={false}>
-              {!photo ? (
-                <View style={styles.controlContainer}>
-                  {!flash ? (
-                    <Icon.FlashOff size={30} fillColor='none' strokeColor='#FFFFFF' onPress={() => setFlash(prevState => !prevState) } />
-                  ) : (
-                    <Icon.Flash size={30} fillColor='none' strokeColor='#FFFFFF' onPress={() => setFlash(prevState => !prevState) } />
-                  )}
-                  <Icon.CircleCapture size={65} fillColor='#FFFFFF' strokeColor='#FFFFFF' onPress={onCapture} />
-                  <Icon.SwitchCamera size={30} fillColor='none' strokeColor='#FFFFFF' onPress={() => setSwitchCamera(prevState => !prevState)} />
-                </View>
+        <RNCamera
+          zoom={zoom}
+          ref={cameraRef}
+          style={{flex: 1}}
+          type={!switchCamera ? RNCamera.Constants.Type.back : RNCamera.Constants.Type.front}
+          flashMode={!flash ? RNCamera.Constants.FlashMode.off : RNCamera.Constants.FlashMode.on}
+          captureAudio={false}
+          pauseAfterCapture={false}>
+          <ZoomView
+            onZoomProgress={progress => {
+              setZoom(progress);
+            }}
+            onZoomStart={() => {
+              console.log('zoom start');
+            }}
+            onZoomEnd={() => {
+              console.log('zoom end');
+            }}>
+              <View style={styles.cameraArea} />
+          </ZoomView>
+          {!photo ? (
+            <View style={styles.controlContainer}>
+              {!flash ? (
+                <Icon.FlashOff size={30} fillColor='none' strokeColor='#FFFFFF' onPress={() => setFlash(prevState => !prevState) } />
               ) : (
-                <View style={styles.controlContainer}>
-                  <Icon.CrossCircle size={35} fillColor='none' strokeColor='#FFFFFF' onPress={onCancelCapture} />
-                  <Icon.CheckCircle size={35} fillColor='none' strokeColor='#FFFFFF' onPress={onSaveCapture} />
-                </View>
+                <Icon.Flash size={30} fillColor='none' strokeColor='#FFFFFF' onPress={() => setFlash(prevState => !prevState) } />
               )}
-          </RNCamera>
-        </ZoomView>
+              <Icon.CircleCapture size={65} fillColor='#FFFFFF' strokeColor='#FFFFFF' onPress={onCapture} />
+              <Icon.SwitchCamera size={30} fillColor='none' strokeColor='#FFFFFF' onPress={() => setSwitchCamera(prevState => !prevState)} />
+            </View>
+          ) : (
+            <View style={styles.controlContainer}>
+              <Icon.CrossCircle size={35} fillColor='none' strokeColor='#FFFFFF' onPress={onCancelCapture} />
+              <Icon.CheckCircle size={35} fillColor='none' strokeColor='#FFFFFF' onPress={onSaveCapture} />
+            </View>
+          )}
+        </RNCamera>
       )}
     </View>
   )
@@ -120,10 +135,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000000'
   }, 
-  preview: {
+  cameraArea: {
     flex: 1,
-    justifyContent: 'flex-end',
-    // alignItems: 'center',
+    backgroundColor: 'transparent'
   },
   controlContainer: {
     flexDirection: 'row',

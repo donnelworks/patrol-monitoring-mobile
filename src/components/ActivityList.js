@@ -6,7 +6,7 @@ import Text from './Text';
 import { colors } from '@styles';
 import { timeFormat } from '@helpers';
 
-const ActivityList = ({time, activity, region, status, border, shadow, onPress}) => {
+const ActivityList = ({time, activity, region, status, updated, canceled, border, shadow, onPress}) => {
   return (
     <>
       <Card shadow={shadow} onPress={onPress} style={{borderWidth: border ? 1 : 0, borderColor: colors.border}}>
@@ -34,15 +34,39 @@ const ActivityList = ({time, activity, region, status, border, shadow, onPress})
                 {region}
               </Text>
             </View>
+            {(updated && !canceled) && (
+              <>
+                <Gap height={3} />
+                <Text type="OpenSansRegularItalic" size={10} numberOfLines={1}>
+                  Diubah
+                </Text>
+              </>
+            )}
+            {canceled && (
+              <>
+                <Gap height={3} />
+                <Text type="OpenSansRegularItalic" color="secondary" size={10} numberOfLines={1}>
+                  Dibatalkan
+                </Text>
+              </>
+            )}
           </Grid.Col>
           <Grid.Col xs={2}>
             <View
               style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                <Icon.Circle
-                  size={20}
-                  strokeColor={status === "0" ? colors.border : status === "1" ? colors.secondary : colors.success}
-                  fillColor={status === "0" ? "white" : status === "1" ? colors.secondary : colors.success}
-                />
+                {!canceled ? (
+                  <Icon.Circle
+                    size={20}
+                    strokeColor={status === "0" ? colors.border : status === "1" ? colors.secondary : colors.success}
+                    fillColor={status === "0" ? "white" : status === "1" ? colors.secondary : colors.success}
+                  />
+                ) : (
+                  <Icon.CrossCircle
+                    size={20}
+                    strokeColor={colors.border }
+                    fillColor="white"
+                  />
+                )}
             </View>
           </Grid.Col>
         </Grid.Row>

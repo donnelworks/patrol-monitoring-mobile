@@ -1,4 +1,4 @@
-import { View, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity, Image} from 'react-native'
+import { View, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity, Platform, Linking} from 'react-native'
 import React, {useState, useEffect} from 'react'
 import { Gap, Grid, Icon, Screen } from '@themes'
 import { Alert, Button, Card, ImagePopup, Input, Text, Toast } from '@components'
@@ -15,9 +15,9 @@ const CheckPatrol = ({navigation, route}) => {
   const [isGetPosition, setIsGetPosition] = useState(false);
   const [formValidation, setFormValidation] = useState({media: "", notes: ""});
   const [loading, setLoading] = useState(false);
-  
+  const [statusTimer, setStatusTimer] = useState(false);
+  const [timer, setTimer] = useState(0);
   const [finishActivity, setFinishActivity] = useState({checkIn: null, checkOut: null});
-  const [laodingFinishActivity, setLoadingFinishActivity] = useState(false);
 
   useEffect(() => {
     if (params?.status_checkin === "2") {
@@ -32,16 +32,32 @@ const CheckPatrol = ({navigation, route}) => {
     }
   }, [route.params?.media]);
 
+  useEffect(() => {
+    let timerId;
+    if (statusTimer) {
+      timerId = setInterval(() => {
+        setTimer((prev) => {
+          if (prev > 0) {
+            return prev - 1;
+          }
+          setStatusTimer(false);
+          clearInterval(timerId);
+        });
+      }, 1000);
+    }
+
+    return function cleanup() {
+      clearInterval(timerId);
+    };
+  }, [statusTimer]);
+
   const loadFinishActivity = async () => {
     try {
-      setLoadingFinishActivity(true)
       const res = await getFinishActivity(params);
       if (res.success) {
         setFinishActivity(prevState => ({...prevState, checkIn: res.data?.check_in, checkOut: res.data?.check_out}));
-        setLoadingFinishActivity(false);
       }
     } catch (error) {
-      setLoadingFinishActivity(false);
       if (error.statusMessage === "SESSION_ERROR") {
         navigation.replace('login');
         await logout();
@@ -69,12 +85,15 @@ const CheckPatrol = ({navigation, route}) => {
       }
     } catch (error) {
       setLoading(false);
+      setStatusTimer(true);
+      setTimer(10);
       if (error.statusMessage === "SESSION_ERROR") {
         navigation.replace('login');
         await logout();
       } else if (error.statusMessage === "NOT_ACCESS_MEMBER") {
         setToastMessage(error.data);
-        setLoading(false);
+      } else if (error.statusMessage === "ACTIVITY_IS_CANCELED") {
+        setToastMessage(error.data);
       } else if (error.statusMessage === "POSITION_NOT_VALID") {
         setToastMessage(error.data);
       } else {
@@ -135,6 +154,14 @@ const CheckPatrol = ({navigation, route}) => {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  const openMap = (lat, lng) => {
+    const url = Platform.select({
+      ios: `maps:0,0?q=${lat},${lng}`,
+      android: `geo:0,0?q=${lat},${lng}`,
+    });
+    Linking.openURL(url);
   }
 
   if (loading || isGetPosition) {
@@ -206,6 +233,23 @@ const CheckPatrol = ({navigation, route}) => {
           </Card>
         </Screen.Section>
 
+        <Screen.Section padding='15 15 0 15'>
+          <Card shadow>
+            <Grid.Row>
+              <Grid.Col xs={6}>
+                <Text size={14} type="OpenSansSemiBold">Lokasi Kegiatan</Text>
+              </Grid.Col>
+              <Grid.Col xs={6}>
+                <View style={{alignItems: 'flex-end'}}>
+                  <TouchableOpacity onPress={() => openMap(params?.latitude, params?.longitude)}>
+                    <Text size={12} color='primary'>Buka Map</Text>
+                  </TouchableOpacity>
+                </View>
+              </Grid.Col>
+            </Grid.Row>
+          </Card>
+        </Screen.Section>
+
         {params?.status_checkin !== "2" && (
         <Screen.Section padding='15 15 15 15'>
           <Card shadow>
@@ -238,11 +282,47 @@ const CheckPatrol = ({navigation, route}) => {
               </Grid.Col>
               <Grid.Col xs={12}>
                 <Gap height={10} />
-                <Button title={params?.status_checkin === "0" ? "Check In" : "Check Out"} fillColor={params?.status_checkin === "0" ? colors.primary : colors.secondary} onPress={getPosition} />
+                <Button title={(params?.status_checkin === "0" ? "Check In" : "Check Out") + (timer > 0 ? ` (${timer})` : '')} fillColor={params?.status_checkin === "0" ? colors.primary : colors.secondary} disabled={timer > 0} onPress={getPosition} />
               </Grid.Col>
             </Grid.Row>
           </Card>
         </Screen.Section>)}
+        
+        {params?.status_checkin === "2" && !finishActivity.checkIn && !finishActivity.checkOut && (
+          <Screen.Section padding='15 15 15 15'>
+            <Card shadow>
+              <Grid.Row rowStyles={{paddingBottom: 5}}>
+                <Grid.Col xs={12}>
+                  <View style={{width: 70, height: 20, borderRadius: 50, backgroundColor: colors.softGray}} />
+                </Grid.Col>
+              </Grid.Row>
+              <Grid.Row rowStyles={{paddingBottom: 5}}>
+                <Grid.Col xs={12}>
+                  <View style={{width: 150, height: 20, borderRadius: 50, backgroundColor: colors.softGray}} />
+                </Grid.Col>
+              </Grid.Row>
+              <Grid.Row rowStyles={{paddingBottom: 5}}>
+                <Grid.Col xs={12}>
+                  <View style={{width: 150, height: 20, borderRadius: 50, backgroundColor: colors.softGray}} />
+                </Grid.Col>
+              </Grid.Row>
+              <Grid.Row rowStyles={{paddingBottom: 5}}>
+                <Grid.Col xs={12}>
+                  <View style={{width: '100%', height: 200, borderRadius: 8, backgroundColor: colors.softGray}} />
+                </Grid.Col>
+              </Grid.Row>
+              <Grid.Row>
+                <Grid.Col xs={12}>
+                  <View style={{width: 120, height: 20, borderRadius: 50, backgroundColor: colors.softGray}} />
+                </Grid.Col>
+                <Grid.Col xs={12}>
+                  <Gap height={5} />
+                  <View style={{width: '100%', height: 20, borderRadius: 50, backgroundColor: colors.softGray}} />
+                </Grid.Col>
+              </Grid.Row>
+            </Card>
+          </Screen.Section>
+        )}
 
         {(params?.status_checkin === "2" && !!finishActivity.checkIn) && (
         <Screen.Section padding='15 15 15 15'>

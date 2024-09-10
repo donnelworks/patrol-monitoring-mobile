@@ -591,3 +591,32 @@ export const FlashOff = ({strokeColor = '#aaa', fillColor = 'none', size = 14, o
     </Svg>
 );
 
+export const NoConnection = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
+    <Svg 
+        onPress={onPress}
+        style={style}
+        fill="none"
+        viewBox="0 0 14 14"
+        height={size}
+        width={size}>
+          <G strokeWidth={1}>
+            <Path
+              stroke={strokeColor}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M.5.5l13 13"
+            />
+            <Path
+              fill={fillColor}
+              d="M7 13.25a1.31 1.31 0 100-2.62 1.31 1.31 0 000 2.62z"
+            />
+            <Path
+              stroke={strokeColor}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M7 13.25a1.31 1.31 0 100-2.62 1.31 1.31 0 000 2.62zM4.53 9a3.49 3.49 0 011.143-.78M2.36 7.31c.609-.612 1.257-.986 1.257-.986M5.55 5.543s.592-.165 1.455-.165A6.55 6.55 0 0111.65 7.31M3.482 3.457A9.19 9.19 0 0113.5 5.45M.5 5.45c.36-.36.732-.657 1.176-.99"
+            />
+        </G>
+    </Svg>
+);
+
