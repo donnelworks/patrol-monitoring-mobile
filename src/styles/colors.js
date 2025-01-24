@@ -11,6 +11,8 @@ const colors = {
   border: '#7C98B6',
   success: '#4AAF41',
   softSuccess: '#F5FBF4',
+  white: '#FFFFFF',
+  black: '#000000'
 };
 
 export default colors;

@@ -5,6 +5,6 @@ import Button from './Button';
 import ActivityList from './ActivityList';
 import Alert from './Alert';
 import Toast from './Toast';
-import ImagePopup from './ImagePopup';
+import ImageInput from './ImageInput';
 
-export {Card, Text, Input, Button, ActivityList, Alert, Toast, ImagePopup};
+export {Card, Text, Input, Button, ActivityList, Alert, Toast, ImageInput};

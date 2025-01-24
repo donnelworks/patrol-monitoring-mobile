@@ -1,9 +1,15 @@
-import { request } from "@helpers";
+import { getAppVersion, request } from "@helpers";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const login = async (data) => {
     try {
-        const res = await request('auth/login', data);
+        let requestData = {
+            ...data,
+            app_version: getAppVersion()
+        }
+
+        const res = await request('auth/login', requestData);
+        
         await AsyncStorage.setItem('userId', res.data.id);
         await AsyncStorage.setItem('memberName', res.data.name);
         await AsyncStorage.setItem('teamName', res.data.team_name);
@@ -19,7 +25,11 @@ export const login = async (data) => {
 export const sessionCheck = async () => {
     try {
         const id = await AsyncStorage.getItem('userId');
-        const res = await request('auth/session_check', {id});
+
+        const res = await request('auth/session_check', {
+            id,
+            app_version: getAppVersion()
+        });
         return res;
     } catch (error) {
         throw error;

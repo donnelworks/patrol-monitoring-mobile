@@ -620,3 +620,229 @@ export const NoConnection = ({strokeColor = '#aaa', fillColor = 'none', size = 1
     </Svg>
 );
 
+export const ArrowLeft = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
+    <Svg 
+        onPress={onPress}
+        style={style}
+        fill="none"
+        viewBox="0 0 14 14"
+        height={size}
+        width={size}>
+          <Path
+            d="M.805 7h12.39M.805 7l5.31 6.176M.805 7L6.115.824"
+            strokeWidth={1.52711}
+            fill="none"
+            fillOpacity={1}
+            stroke={strokeColor}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeOpacity={1}
+          />
+    </Svg>
+);
+
+export const ImageDirectory = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
+  <Svg 
+      onPress={onPress}
+      style={style}
+      fill="none"
+      viewBox="0 0 14 14"
+      height={size}
+      width={size}>
+        <G strokeWidth={1}>
+          <Path
+            fill={fillColor}
+            fillRule="evenodd"
+            d="M10.902 13.25H1.5a1 1 0 01-.983-.818V10.95l4.096-2.946a.538.538 0 01.688 0l5.601 5.247z"
+            clipRule="evenodd"
+          />
+          <Path
+            stroke={strokeColor}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M10.903 13.25H1.501a1 1 0 01-.983-.818V10.95l4.096-2.946a.538.538 0 01.688 0l5.601 5.248z"
+          />
+          <Path
+            stroke={strokeColor}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M.5 12.25V1.75a1 1 0 011-1h3.69a1 1 0 011 .76l.31 1.24h6a1 1 0 011 1v8.5a1 1 0 01-1 1h-11a1 1 0 01-1-1z"
+          />
+        </G>
+  </Svg>
+);
+
+export const PlusCircle = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
+  <Svg 
+      onPress={onPress}
+      style={style}
+      fill="none"
+      viewBox="0 0 14 14"
+      height={size}
+      width={size}>
+        <G strokeWidth={1}>
+          <Path fill={fillColor} d="M7 13.5a6.5 6.5 0 100-13 6.5 6.5 0 000 13z" />
+          <Path
+            stroke={strokeColor}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M7 13.5a6.5 6.5 0 100-13 6.5 6.5 0 000 13zM7 4v6M4 7h6"
+          />
+        </G>
+  </Svg>
+);
+
+export const CameraPlus = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
+  <Svg 
+      onPress={onPress}
+      style={style}
+      fill="none"
+      viewBox="0 0 14 14"
+      height={size}
+      width={size}>
+        <Path
+          fill="none"
+          d="M7 9.75a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z"
+          strokeWidth={1}
+        />
+        <Path
+          fill={fillColor}
+          fillRule="evenodd"
+          d="M13.207 4.293A1 1 0 0113.5 5v6a1 1 0 01-1 1h-11a1 1 0 01-1-1V5a1 1 0 011-1h2L5 2h4l1.5 2h2a1 1 0 01.707.293zM9.25 7.5a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"
+          clipRule="evenodd"
+          strokeWidth={1}
+        />
+        <Path
+          stroke={strokeColor}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M7 9.75a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z"
+          strokeWidth={1}
+        />
+        <Path
+          stroke={strokeColor}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M9 2H5L3.5 4h-2a1 1 0 00-1 1v6a1 1 0 001 1h11a1 1 0 001-1V5.915"
+          strokeWidth={1}
+        />
+        <Path
+          stroke={strokeColor}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M11.357 2v4.286M9.214 4.143H13.5"
+          strokeWidth={1}
+          strokeDasharray="none"
+        />
+  </Svg>
+);
+
+export const NextArrow = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
+  <Svg 
+      onPress={onPress}
+      style={style}
+      fill="none"
+      viewBox="0 0 14 14"
+      height={size}
+      width={size}>
+        <G
+          stroke={strokeColor}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1}
+        >
+          <Path d="M.5 7h10M7 10.5L10.5 7 7 3.5M13.5 3.5v7" />
+        </G>
+  </Svg>
+);
+
+export const Trash = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
+  <Svg 
+      onPress={onPress}
+      style={style}
+      fill="none"
+      viewBox="0 0 14 14"
+      height={size}
+      width={size}>
+        <G strokeWidth={1}>
+          <Path
+            stroke={strokeColor}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M1 3.5h12"
+          />
+          <Path
+            fill={fillColor}
+            d="M2.5 3.5h9v9a1 1 0 01-1 1h-7a1 1 0 01-1-1v-9z"
+          />
+          <Path
+            stroke={strokeColor}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M2.5 3.5h9v9a1 1 0 01-1 1h-7a1 1 0 01-1-1v-9zM4.5 3.5V3a2.5 2.5 0 115 0v.5M5.5 6.501v4.002M8.5 6.501v4.002"
+          />
+        </G>
+  </Svg>
+);
+
+export const Update = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
+  <Svg 
+      onPress={onPress}
+      style={style}
+      fill="none"
+      viewBox="0 0 14 14"
+      height={size}
+      width={size}>
+        <G strokeWidth={1}>
+          <Path
+            fill={fillColor}
+            d="M4.093 3.976l.36-.93a.838.838 0 01.78-.536h.687a.838.838 0 01.779.536l.36.93 1.223.704.99-.151a.838.838 0 01.837.41l.335.587a.837.837 0 01-.067.947l-.612.779v1.407l.629.78a.838.838 0 01.067.946l-.335.587a.837.837 0 01-.838.41l-.989-.15-1.223.703-.36.93a.838.838 0 01-.78.536h-.703a.838.838 0 01-.78-.536l-.36-.93-1.223-.704-.988.151a.838.838 0 01-.838-.41l-.335-.587a.838.838 0 01.067-.946l.611-.78V7.252l-.628-.78a.838.838 0 01-.067-.946l.335-.586a.838.838 0 01.838-.411l.988.15 1.24-.703zm-.192 3.98a1.676 1.676 0 103.351 0 1.676 1.676 0 00-3.351 0z"
+          />
+          <Path
+            stroke={strokeColor}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M5.92 2.51h-.687a.838.838 0 00-.78.536l-.36.93-1.24.704-.988-.151a.838.838 0 00-.838.41l-.335.587a.838.838 0 00.067.947l.628.779v1.407l-.611.78a.838.838 0 00-.067.946l.335.587a.837.837 0 00.838.41l.988-.15 1.223.703.36.93a.838.838 0 00.78.536h.704a.838.838 0 00.779-.536l.36-.93 1.223-.704.989.151a.838.838 0 00.838-.41l.335-.587a.838.838 0 00-.067-.946l-.629-.78v-.907m-5.864.204a1.676 1.676 0 103.351 0 1.676 1.676 0 00-3.351 0z"
+          />
+          <Path
+            fill="#fff"
+            d="M8.1 3.603c-.306-.053-.306-.494 0-.548A2.779 2.779 0 0010.34.912l.018-.085c.067-.303.499-.305.568-.002l.023.098a2.793 2.793 0 002.244 2.13c.309.055.309.498 0 .551a2.793 2.793 0 00-2.244 2.131l-.023.099c-.069.302-.501.3-.568-.003l-.018-.084a2.779 2.779 0 00-2.238-2.144z"
+          />
+          <Path
+            stroke={strokeColor}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M8.1 3.603c-.306-.053-.306-.494 0-.548A2.779 2.779 0 0010.34.912l.018-.085c.067-.303.499-.305.568-.002l.023.098a2.793 2.793 0 002.244 2.13c.309.055.309.498 0 .551a2.793 2.793 0 00-2.244 2.131l-.023.099c-.069.302-.501.3-.568-.003l-.018-.084a2.779 2.779 0 00-2.238-2.144z"
+          />
+        </G>
+  </Svg>
+);
+
+export const Info = ({strokeColor = '#aaa', fillColor = 'none', size = 14, onPress, style}) => (
+  <Svg 
+      onPress={onPress}
+      style={style}
+      fill="none"
+      viewBox="0 0 14 14"
+      height={size}
+      width={size}>
+        <G strokeWidth={1}>
+          <Path fill={fillColor} d="M7 13.5a6.5 6.5 0 100-13 6.5 6.5 0 000 13z" />
+          <Path
+            stroke={strokeColor}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M7 13.5a6.5 6.5 0 100-13 6.5 6.5 0 000 13zM5.5 10h3"
+          />
+          <Path
+            stroke={strokeColor}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M7 10V6.5H6"
+          />
+          <G stroke={strokeColor} strokeLinecap="round" strokeLinejoin="round">
+            <Path d="M7 4.25a.25.25 0 010-.5M7 4.25a.25.25 0 000-.5" />
+          </G>
+        </G>
+  </Svg>
+);

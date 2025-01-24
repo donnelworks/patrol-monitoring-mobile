@@ -40,6 +40,10 @@
     {
       "path": "src/assets/fonts/OpenSans-SemiBoldItalic.ttf",
       "sha1": "3add68a065e0eaa54ded5170348ffd811c409e63"
+    },
+    {
+      "path": "src/assets/fonts/SFSportsNight.ttf",
+      "sha1": "3e4c0b6e820713ee74e6e123c8c1ac856b3e1059"
     }
   ]
 }

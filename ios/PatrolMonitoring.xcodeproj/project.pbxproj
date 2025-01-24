@@ -22,6 +22,7 @@
 		C7F27950274845D5BACA35AB /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A8A7D9543960442DBDA17C40 /* OpenSans-Regular.ttf */; };
 		15CF541AE1EC4156BD60F383 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9214451843A345E9A0F5E904 /* OpenSans-SemiBold.ttf */; };
 		BF123C61F83E429883733BD8 /* OpenSans-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA4D52C29B894A35B21AB9B5 /* OpenSans-SemiBoldItalic.ttf */; };
+		A008CEAFBC8D44DFAC648D80 /* SFSportsNight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EE572C0E08DD4E49B8A793BA /* SFSportsNight.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		A8A7D9543960442DBDA17C40 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; name = "OpenSans-Regular.ttf"; path = "../src/assets/fonts/OpenSans-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		9214451843A345E9A0F5E904 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; name = "OpenSans-SemiBold.ttf"; path = "../src/assets/fonts/OpenSans-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		AA4D52C29B894A35B21AB9B5 /* OpenSans-SemiBoldItalic.ttf */ = {isa = PBXFileReference; name = "OpenSans-SemiBoldItalic.ttf"; path = "../src/assets/fonts/OpenSans-SemiBoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		EE572C0E08DD4E49B8A793BA /* SFSportsNight.ttf */ = {isa = PBXFileReference; name = "SFSportsNight.ttf"; path = "../src/assets/fonts/SFSportsNight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +160,7 @@
 				A8A7D9543960442DBDA17C40 /* OpenSans-Regular.ttf */,
 				9214451843A345E9A0F5E904 /* OpenSans-SemiBold.ttf */,
 				AA4D52C29B894A35B21AB9B5 /* OpenSans-SemiBoldItalic.ttf */,
+				EE572C0E08DD4E49B8A793BA /* SFSportsNight.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -263,6 +266,7 @@
 				C7F27950274845D5BACA35AB /* OpenSans-Regular.ttf in Resources */,
 				15CF541AE1EC4156BD60F383 /* OpenSans-SemiBold.ttf in Resources */,
 				BF123C61F83E429883733BD8 /* OpenSans-SemiBoldItalic.ttf in Resources */,
+				A008CEAFBC8D44DFAC648D80 /* SFSportsNight.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

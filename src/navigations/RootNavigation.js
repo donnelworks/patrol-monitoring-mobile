@@ -8,11 +8,14 @@ const Stack = createStackNavigator();
 
 const RootNavigation = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName='splashscreen'>
       <Stack.Screen
         name="splashscreen"
         component={SplashScreen}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          cardStyle: {backgroundColor: 'transparent'}
+        }}
       />
       <Stack.Screen
         name="login"

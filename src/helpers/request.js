@@ -1,16 +1,16 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { endpoint } from "./path";
+import { baseurl } from "./path";
 import NetInfo from "@react-native-community/netinfo";
 import { SheetManager } from "react-native-actions-sheet";
 
-const request = async (ROUTE, REQUEST_PAYLOAD) => {
+const request = async (ENDPOINT, REQUEST_PAYLOAD) => {
     const netInfo = await NetInfo.fetch();
 
     if (!netInfo.isConnected) {
         SheetManager?.show('no-internet-sheet');
     }
 
-    const END_POINT = endpoint;
+    const BASE_URL = baseurl;
     const AUTH_TOKEN = await AsyncStorage.getItem('token');
 
     let bodyData = JSON.stringify(REQUEST_PAYLOAD);
@@ -28,7 +28,7 @@ const request = async (ROUTE, REQUEST_PAYLOAD) => {
         requestObject.headers.Authorization = AUTH_TOKEN;
     }
     
-    const res = await fetch(END_POINT + ROUTE, requestObject);
+    const res = await fetch(BASE_URL + ENDPOINT, requestObject);
     
     let resData = await res.text();
     let responseJson = JSON.parse(resData);

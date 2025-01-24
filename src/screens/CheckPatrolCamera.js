@@ -25,6 +25,16 @@ const CheckPatrolCamera = ({navigation}) => {
     return () => backHandler.remove();
   }, [photo]);
 
+  const onGoBackHandler = () => {
+    if (photo) {
+      onCancelCapture();
+      return true;
+    } else {
+      navigation.goBack();
+      return false;
+    }
+  }
+
   const onCapture = async () => {
     try {
       const options = {
@@ -68,6 +78,14 @@ const CheckPatrolCamera = ({navigation}) => {
           flashMode={!flash ? RNCamera.Constants.FlashMode.off : RNCamera.Constants.FlashMode.on}
           captureAudio={false}
           pauseAfterCapture={false}>
+          <View style={styles.topControlContainer}>
+            <Icon.ArrowLeft size={20} fillColor='none' strokeColor='#FFFFFF' onPress={() => onGoBackHandler()} />
+            {!flash ? (
+              <Icon.FlashOff size={20} fillColor='none' strokeColor='#FFFFFF' onPress={() => setFlash(prevState => !prevState) } />
+            ) : (
+              <Icon.Flash size={20} fillColor='none' strokeColor='#FFFFFF' onPress={() => setFlash(prevState => !prevState) } />
+            )}
+          </View>
           <ZoomView
             onZoomProgress={progress => {
               setZoom(progress);
@@ -80,22 +98,20 @@ const CheckPatrolCamera = ({navigation}) => {
             }}>
               <View style={styles.cameraArea} />
           </ZoomView>
-          {!photo ? (
-            <View style={styles.controlContainer}>
-              {!flash ? (
-                <Icon.FlashOff size={30} fillColor='none' strokeColor='#FFFFFF' onPress={() => setFlash(prevState => !prevState) } />
-              ) : (
-                <Icon.Flash size={30} fillColor='none' strokeColor='#FFFFFF' onPress={() => setFlash(prevState => !prevState) } />
-              )}
-              <Icon.CircleCapture size={65} fillColor='#FFFFFF' strokeColor='#FFFFFF' onPress={onCapture} />
-              <Icon.SwitchCamera size={30} fillColor='none' strokeColor='#FFFFFF' onPress={() => setSwitchCamera(prevState => !prevState)} />
+            <View style={styles.bottomControlContainer}>
+            {!photo ? (
+              <>
+                <Icon.ImageDirectory size={25} fillColor='none' strokeColor='#FFFFFF' onPress={() => setFlash(prevState => !prevState) } />
+                <Icon.CircleCapture size={65} fillColor='#FFFFFF' strokeColor='#FFFFFF' onPress={onCapture} />
+                <Icon.SwitchCamera size={25} fillColor='none' strokeColor='#FFFFFF' onPress={() => setSwitchCamera(prevState => !prevState)} />
+              </>
+            ) : (
+              <>
+                <Icon.CrossCircle size={35} fillColor='none' strokeColor='#FFFFFF' onPress={onCancelCapture} />
+                <Icon.CheckCircle size={35} fillColor='none' strokeColor='#FFFFFF' onPress={onSaveCapture} />
+              </>
+            )}
             </View>
-          ) : (
-            <View style={styles.controlContainer}>
-              <Icon.CrossCircle size={35} fillColor='none' strokeColor='#FFFFFF' onPress={onCancelCapture} />
-              <Icon.CheckCircle size={35} fillColor='none' strokeColor='#FFFFFF' onPress={onSaveCapture} />
-            </View>
-          )}
         </RNCamera>
       )}
     </View>
@@ -139,11 +155,20 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'transparent'
   },
-  controlContainer: {
+  topControlContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 50,
-    // backgroundColor: '#000000'
+    paddingVertical: 20,
+    paddingHorizontal: 50,
+    backgroundColor: '#000000'
+  },
+  bottomControlContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 50,
+    height: 150,
+    backgroundColor: '#000000'
   },
 })

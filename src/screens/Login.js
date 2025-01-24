@@ -4,6 +4,7 @@ import { Gap, Screen, Icon } from '@themes'
 import { Alert, Button, Input, Text } from '@components'
 import { colors } from '@styles'
 import { login } from '@services'
+import { SheetManager } from 'react-native-actions-sheet'
 
 const Login = ({navigation}) => {
   const [form, setForm] = useState({username: "", password: ""});
@@ -36,9 +37,14 @@ const Login = ({navigation}) => {
         setFormValidation({...formValidation, username: "", password: ""});
         navigation.replace('home');
       }
-      setLoading(false);
     } catch (error) {
       setLoading(false);
+      if (error.statusMessage === "UPDATE_APP_VERSION") {
+        SheetManager.show('app-update-sheet');
+      }
+      if (error.statusMessage === "USER_IS_NOT_MEMBER") {
+        setAlertMessage(error.data);
+      }
       if (error.statusMessage === "FORM_VALIDATION_ERROR") {
         setFormValidation({
           ...formValidation,
@@ -55,13 +61,13 @@ const Login = ({navigation}) => {
   return (
    <Screen>
     <ScrollView
-      keyboardShouldPersistTaps="always"
+      keyboardShouldPersistTaps="handled"
       contentContainerStyle={{
         flexGrow: 1,
         justifyContent: "center",
     }}>
       <Screen.Section alignItems="center">
-          <Text size={45} color="primary" type="OpenSansExtraBold">SIJAGA</Text>
+          <Text size={60} color="primary" type="SportsNight">SIPAGI</Text>
       </Screen.Section>
       <Gap height={50} />
       <Screen.Section padding='0 30 0 30'>
@@ -78,6 +84,7 @@ const Login = ({navigation}) => {
           }
           returnKeyType="next"
           onSubmitEditing={() => inputRef?.password?.current?.focus()}
+          blurOnSubmit={false}
           invalidMessage={formValidation.username}
         />
         <Gap height={10} />

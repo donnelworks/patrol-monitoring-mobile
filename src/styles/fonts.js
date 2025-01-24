@@ -29,6 +29,7 @@ const type = {
     OpenSansBoldItalic: 'OpenSans-BoldItalic',
     OpenSansExtraBold: 'OpenSans-ExtraBold',
     OpenSansExtraBoldItalic: 'OpenSans-ExtraBoldItalic',
+    SportsNight: 'SFSportsNight',
 };
 
 export {size, type};

@@ -1,7 +1,7 @@
 // PROD
-export const endpoint = 'https://sijaga.logistikresjakbar.com/api/';
-export const mediaurl = 'https://sijaga.logistikresjakbar.com/assets/files/media/';
+// export const baseurl = 'https://sipagi.logistikresjakbar.com/api/';
+// export const mediaurl = 'https://sipagi.logistikresjakbar.com/assets/files/media/';
 
 // DEV
-// export const endpoint = 'https://dev.siskasoftware.com/api/';
-// export const mediaurl = 'https://dev.siskasoftware.com/assets/files/media/';
+export const baseurl = 'http://127.0.0.1:8080/patrol-monitoring/api/';
+export const mediaurl = 'http://127.0.0.1:8080/patrol-monitoring/assets/files/media/';

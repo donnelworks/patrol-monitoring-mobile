@@ -109,11 +109,11 @@ const Home = ({navigation}) => {
   return (
     <Screen>
       {!!toastMessage.length && <Toast messages={toastMessage} />}
-      <Screen.Section padding="0 15 0 15">
+      <Screen.Section padding="15 15 15 15">
         <Grid.Row>
           <Grid.Col xs={6}>
-            <Text type="OpenSansExtraBold" size={28} color="primary">
-              SIJAGA
+            <Text type="SportsNight" size={35} color="primary">
+              SIPAGI
             </Text>
           </Grid.Col>
           <Grid.Col xs={6}>
